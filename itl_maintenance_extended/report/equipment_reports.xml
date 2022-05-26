@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+                id="report_equipment_barcode"
+                string="Equipment Barcode (PDF)"
+                model="maintenance.equipment"
+                report_type="qweb-pdf"
+                name="itl_maintenance_extended.report_equipmentbarcode"
+                file="itl_maintenance_extended.report_equipmentbarcode"
+                print_report_name="'Equipment barcode - %s' % (object.name)"
+        />
+    </data>
+</odoo>

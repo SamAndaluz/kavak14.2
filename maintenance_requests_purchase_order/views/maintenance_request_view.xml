@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="custom_hr_equipment_request_view_form_inherit" model="ir.ui.view">
+            <field name="name">equipment.request.form.inherit</field>
+            <field name="model">maintenance.request</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='description']" position="before">
+                    <notebook>
+                        <page string="Request Product to Vendor" groups="sales_team.group_sale_salesman">
+                            <field name="request_rfq_line" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="product_id"/>
+                                    <field name="product_uom_qty" string="Request Quantity"/>
+                                    <field name="product_uom"
+                                        groups="uom.group_uom" options='{"no_open": True}'/>
+                                    <field name="partner_id"/>
+                                    <field name="qty_onhand" />
+                                    <field name="custom_purchase_line_id" readonly="1"/>
+                                    <field name="custom_purchase_id" readonly="1"/>
+                                </tree>
+                                <form string="Product Request Line">
+                                    <group>
+                                        <group>
+                                            <field name="maintenance_request_id"/>
+                                            <field name="partner_id"/>
+                                            <field name="product_uom_qty"/>
+                                            <field name="product_uom"/>
+                                        </group>
+                                        <group>
+                                            <field name="sequence"/>
+                                            <field name="product_id"/>
+                                            <field name="qty_onhand"/>
+                                            <field name="custom_purchase_id"/>
+                                            <field name="custom_purchase_line_id"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                            <group>
+                                <field name="purchase_order_ids" nolabel='1' invisible='1'/>
+                            </group>
+                        </page>
+                    </notebook>
+                </xpath>
+                <xpath expr="/form/sheet/div[hasclass('oe_title')]" position="before">
+                    <div class="oe_button_box" name="button_box">
+                        <button name="custom_open_rfq" type="object" class="oe_stat_button" icon="fa-shopping-cart" attrs="{'invisible':[('purchase_order_count','==', 0)]}">
+                            <field name="purchase_order_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="maintenance_request_view_form_inherit_rfq_btn" model="ir.ui.view">
+            <field name="name">maintenance.request.inherited.rfq</field>
+            <field name="model">maintenance.request</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='stage_id']" position="before">
+                    <button string="Create Vendor RFQ" name="create_rfq" type="object" class="oe_highlight"  groups="purchase.group_purchase_user,sales_team.group_sale_salesman" />
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="purchase_order_form_inherit_maintenance_request_id" model="ir.ui.view">
+            <field name="name">purchase.order.inherited.maintenance_request_id</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook//page//field[@name='fiscal_position_id']" position="after">
+                    <field name="maintenance_request_id" attrs="{'readonly':[('state','!=', 'draft')]}"/>
+                </xpath>
+            </field>
+        </record>
+
+
+</odoo>

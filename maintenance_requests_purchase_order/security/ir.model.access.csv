@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_request_rfq_mr_custom_portal,request_rfq_mr_custom.portal,model_request_rfq_mr_custom,base.group_portal,1,0,0,0
+access_request_rfq_mr_custom_employee,request_rfq_mr_custom.employee,model_request_rfq_mr_custom,base.group_user,1,0,0,0
+access_request_rfq_mr_custom_owenlead,request_rfq_mr_custom.ownled,model_request_rfq_mr_custom,sales_team.group_sale_salesman,1,1,1,1
